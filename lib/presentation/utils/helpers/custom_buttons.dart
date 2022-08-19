@@ -3,7 +3,7 @@ import 'package:rare_crew_task_cynthia/presentation/utils/constants/device_size.
 
 import '../constants/colors.dart';
 
-authenticationButton(BuildContext context, String text) {
+Widget authenticationButton(BuildContext context, String text) {
   return Container(
     alignment: Alignment.center,
     margin: const EdgeInsets.fromLTRB(24, 24, 24, 45),

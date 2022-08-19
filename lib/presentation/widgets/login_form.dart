@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rare_crew_task_cynthia/presentation/screens/main_screen.dart';
 import 'package:rare_crew_task_cynthia/presentation/screens/signup_screen.dart';
 import 'package:rare_crew_task_cynthia/presentation/utils/helpers/custom_buttons.dart';
 import 'package:rare_crew_task_cynthia/presentation/utils/helpers/navigators.dart';
@@ -23,22 +24,18 @@ class _LoginFormState extends State<LoginForm> {
       padding: const EdgeInsets.fromLTRB(24, 44, 24, 24),
       child: Column(
         children: [
-          textForm(
-            'Username',
-            const Icon(Icons.person, color: hintTextColor),
-            _emailController
-          ),
+          textForm('Username', const Icon(Icons.person, color: hintTextColor),
+              _emailController),
           const SizedBox(
             height: 24,
           ),
           textForm(
-            'Password',
-            const Icon(
-              Icons.lock,
-              color: hintTextColor,
-            ),
-            _passwordController
-          ),
+              'Password',
+              const Icon(
+                Icons.lock,
+                color: hintTextColor,
+              ),
+              _passwordController),
           const SizedBox(
             height: 24,
           ),
@@ -50,7 +47,9 @@ class _LoginFormState extends State<LoginForm> {
                 fontFamily: 'Poppins',
                 fontSize: 14),
           ),
-          authenticationButton(context, 'Login'),
+          GestureDetector(
+              onTap: () => navigatePush(context, const MainScreen()),
+              child: authenticationButton(context, 'Login')),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
