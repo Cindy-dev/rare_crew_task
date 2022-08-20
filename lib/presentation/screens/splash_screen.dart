@@ -43,7 +43,9 @@ class _SplashScreenState extends State<SplashScreen>
             );
           },
           child: Center(
-            child: Image.asset('asset/images/rarecrew.png'),
+            child: Hero(
+                tag: 'rare',
+                child: Image.asset('asset/images/rarecrew.png')),
           ),
         ),
       ),

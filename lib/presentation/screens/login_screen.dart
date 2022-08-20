@@ -18,13 +18,16 @@ class LoginScreen extends StatelessWidget {
         color: whiteBackground.withOpacity(.8),
         child: Column(
           children: [
-            Container(
-              margin: EdgeInsets.only(bottom: context.screenHeight() / 12.5),
-              height: context.screenHeight()/6,
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image: AssetImage('asset/images/rarecrew.png'))),
+            Hero(
+              tag: 'rare',
+              child: Container(
+                margin: EdgeInsets.only(bottom: context.screenHeight() / 12.5),
+                height: context.screenHeight()/6,
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: AssetImage('asset/images/rarecrew.png'))),
+              ),
             ),
             const Text(
               'Login ',
