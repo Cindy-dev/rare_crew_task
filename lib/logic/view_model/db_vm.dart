@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rare_crew_task_cynthia/data/model/db_model.dart';
 import 'package:rare_crew_task_cynthia/data/repository/database_services.dart';
+import 'package:sqflite/sqflite.dart';
 
 abstract class DBViewModelState {
   DBViewModelState();
@@ -25,12 +26,13 @@ class DBViewModelError extends DBViewModelState {
 }
 
 class DBViewModelNotifier extends StateNotifier<DBViewModelState> {
+  List<DBModel> _items = [];
+
+  var editedItem =
+      DBModel(id: '', name: '', occupation: '', age: num.parse(''));
   final Ref ref;
   DBViewModelNotifier(this.ref) : super(DBViewModelInitial());
-
   Future<void> getData() async {
-    List<DBModel> _items = [];
-
     state = DBViewModelLoading();
     try {
       final result =
@@ -44,8 +46,41 @@ class DBViewModelNotifier extends StateNotifier<DBViewModelState> {
           .toList();
       state = DBViewModelLoaded(_items);
     } catch (error) {
-      print(error);
+      print(error.toString());
       state = DBViewModelError(error.toString());
     }
+  }
+
+  Future<void> addData(String name, String occupation, num age) async {
+    final newData = DBModel(
+        id: DateTime.now().toString(),
+        name: name,
+        occupation: occupation,
+        age: age);
+    _items.add(newData);
+    //adding the created data to the database
+    await ref.read(dbServicesProvider).addItem('rare_crew', {
+      'id': newData.id,
+      'name': newData.name,
+      'occupation': newData.occupation,
+      'age': newData.age,
+    });
+  }
+
+  Future<void> updateData(String id, DBModel dbModel) async {
+    final newData = DBModel(
+        id: DateTime.now().toString(),
+        name: dbModel.name,
+        occupation: dbModel.occupation,
+        age: dbModel.age);
+    ref.read(dbServicesProvider).updateDB(dbModel);
+  }
+
+  Future<void> deleteData(String id) async {
+    await ref.read(dbServicesProvider).delete(id);
+  }
+
+  DBModel findByID(String id) {
+    return _items.firstWhere((element) => element.id == id);
   }
 }

@@ -4,7 +4,7 @@ import 'package:rare_crew_task_cynthia/presentation/utils/helpers/add_text_form.
 import '../utils/constants/colors.dart';
 
 //modal sheet for the add item logic
-addItemModalSheet(
+editItemModalSheet(
     BuildContext context,
     TextEditingController nameController,
     TextEditingController occupationController,
@@ -23,7 +23,7 @@ addItemModalSheet(
           child: Column(
             children: [
               const Text(
-                'Add New Item',
+                'Edit Item',
                 style: TextStyle(
                     color: boldTextColor,
                     fontWeight: FontWeight.w600,
@@ -45,7 +45,7 @@ addItemModalSheet(
                     primary: orangeColor,
                   ),
                   child: const Text(
-                    'Add',
+                    'Update',
                     style: TextStyle(
                         color: whiteColor,
                         fontWeight: FontWeight.w600,

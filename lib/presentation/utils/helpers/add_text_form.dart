@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/colors.dart';
 
+//a text field widget for the add item logic
 addTextForm(String? hintText, TextEditingController controller) {
   return TextFormField(
     cursorColor: orangeColor,

@@ -25,14 +25,12 @@ class DatabaseServices {
 
 //creating a function that enables us add an item to the database
   Future<void> addItem(String table, Map<String, Object> data) async {
-    print(data);
     final db = await DatabaseServices.database();
     var rawData = db.insert(
       table,
       data,
       conflictAlgorithm: sql.ConflictAlgorithm.replace,
     );
-    print(rawData);
   }
 
   //creating a function to enable us retrieve/fetch all items in the database
@@ -42,7 +40,7 @@ class DatabaseServices {
   }
 
   //creating a function that updates item in the database
-   Future<int> updateDB(DBModel dbModel) async {
+  Future<int> updateDB(DBModel dbModel) async {
     final db = await DatabaseServices.database();
     return await db.update("rare_crew", dbModel.toMap(),
         where: "id = ?", whereArgs: [dbModel.id]);

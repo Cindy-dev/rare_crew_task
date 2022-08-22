@@ -3,12 +3,13 @@ import 'package:flutter/widgets.dart';
 
 import '../constants/colors.dart';
 
-gridTile(String name, String occupation, num age) {
+// widget to display available data in the database
+gridTile(String name, String occupation, num age, void Function()? onPressed,
+    {void Function()? update}) {
   return Column(
     children: [
       Text(
         'Name : $name',
-        overflow: TextOverflow.ellipsis,
         style: const TextStyle(
             color: textColor,
             fontWeight: FontWeight.w500,
@@ -44,14 +45,33 @@ gridTile(String name, String occupation, num age) {
         ),
       ),
       const Spacer(),
-      Container(
-        alignment: Alignment.bottomRight,
-        child: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.delete,
-              color: Colors.red,
-            )),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ElevatedButton(
+            onPressed: update,
+            style: ElevatedButton.styleFrom(
+              primary: orangeColor,
+            ),
+            child: const Text(
+              'Edit',
+              style: TextStyle(
+                  color: whiteColor,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Poppins',
+                  fontSize: 16),
+            ),
+          ),
+          Container(
+            alignment: Alignment.bottomRight,
+            child: IconButton(
+                onPressed: onPressed,
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                )),
+          ),
+        ],
       )
     ],
   );
