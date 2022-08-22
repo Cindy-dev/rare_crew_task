@@ -2,7 +2,7 @@ class DBModel {
   final String id;
   final String name;
   final String occupation;
-  final String age;
+  final num age;
 
   DBModel(
       {required this.id,
@@ -14,7 +14,7 @@ class DBModel {
       {required String id,
       required String name,
       required String occupation,
-      required String age}) {
+      required num age}) {
     return DBModel(
       id: this.id,
       name: name ?? this.name,

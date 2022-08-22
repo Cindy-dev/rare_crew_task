@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rare_crew_task_cynthia/data/model/db_model.dart';
+import 'package:rare_crew_task_cynthia/data/repository/database_services.dart';
 
 abstract class DBViewModelState {
   DBViewModelState();
@@ -18,11 +19,22 @@ class DBViewModelLoaded extends DBViewModelState {
   DBViewModelLoaded(this.dbModel);
 }
 
-class DBViewModel extends DBViewModelState {
+class DBViewModelError extends DBViewModelState {
   String error;
-  DBViewModel(this.error);
+  DBViewModelError(this.error);
 }
 
 class DBViewModelNotifier extends StateNotifier<DBViewModelState> {
-  DBViewModelNotifier() : super(DBViewModelInitial());
+  final Ref ref;
+  DBViewModelNotifier(this.ref) : super(DBViewModelInitial());
+
+  Future<void> getData() async {
+    state = DBViewModelLoading();
+    try {
+      final result =
+          await ref.read(dbServicesProvider).fetchDbData('rare_crew');
+    } catch (error) {
+      state = DBViewModelError(error.toString());
+    }
+  }
 }
