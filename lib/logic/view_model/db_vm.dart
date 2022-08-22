@@ -15,7 +15,7 @@ class DBViewModelLoading extends DBViewModelState {
 }
 
 class DBViewModelLoaded extends DBViewModelState {
-  DBModel dbModel;
+  List<DBModel> dbModel;
   DBViewModelLoaded(this.dbModel);
 }
 
@@ -29,11 +29,22 @@ class DBViewModelNotifier extends StateNotifier<DBViewModelState> {
   DBViewModelNotifier(this.ref) : super(DBViewModelInitial());
 
   Future<void> getData() async {
+    List<DBModel> _items = [];
+
     state = DBViewModelLoading();
     try {
       final result =
           await ref.read(dbServicesProvider).fetchDbData('rare_crew');
+      _items = result
+          .map((item) => DBModel(
+              id: item['id'],
+              name: item['name'],
+              occupation: item['occupation'],
+              age: item['age']))
+          .toList();
+      state = DBViewModelLoaded(_items);
     } catch (error) {
+      print(error);
       state = DBViewModelError(error.toString());
     }
   }
