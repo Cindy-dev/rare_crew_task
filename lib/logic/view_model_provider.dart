@@ -12,5 +12,5 @@ final loginViewModelNotifierProvider =
         (ref) => LoginVMNotifier(ref));
 
 final signupViewModelNotifierProvider =
-StateNotifierProvider.autoDispose<SignupVMNotifier, SignupVMState>(
+StateNotifierProvider<SignupVMNotifier, SignupVMState>(
         (ref) => SignupVMNotifier(ref));

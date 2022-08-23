@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rare_crew_task_cynthia/data/repository/authentication.dart';
 
 import '../../data/model/user.dart';
+import '../../presentation/screens/login_screen.dart';
 import '../../presentation/screens/main_screen.dart';
 import '../../presentation/utils/helpers/navigators.dart';
 
@@ -41,6 +44,16 @@ class LoginVMNotifier extends StateNotifier<LoginVMState> {
       state = LoginVMLoaded(result);
     } catch (error) {
       print(error);
+    }
+  }
+
+  Future<void> logOut(BuildContext context) async {
+    try {
+      await ref.read(authServicesProvider).signOut(() {
+        navigatePush(context, const LoginScreen());
+      });
+    } catch (error) {
+      print(error.toString());
     }
   }
 }

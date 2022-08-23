@@ -17,9 +17,9 @@ class DBModel {
       required num age}) {
     return DBModel(
       id: this.id,
-      name: name ?? this.name,
-      occupation: occupation ?? this.occupation,
-      age: age ?? this.age,
+      name: name,
+      occupation: occupation,
+      age: age
     );
   }
 

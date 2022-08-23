@@ -53,7 +53,6 @@ class AuthenticationServices {
             fullName: result.user!.displayName.toString(),
             phoneNumber: result.user!.phoneNumber.toString());
         onSuccess.call();
-
         return user;
       } else {
         throw Exception();

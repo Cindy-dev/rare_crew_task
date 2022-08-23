@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import '../constants/colors.dart';
 
 //text form field for the authentication screens
-textForm(String? hintText, Icon? prefixIcon, TextEditingController controller) {
+textForm(String? hintText, Icon? prefixIcon, TextEditingController controller,
+    String? Function(String?)? validator) {
   return TextFormField(
+    validator: validator,
     cursorColor: orangeColor,
     controller: controller,
     decoration: InputDecoration(

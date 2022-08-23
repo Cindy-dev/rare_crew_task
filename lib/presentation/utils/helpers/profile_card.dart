@@ -24,11 +24,11 @@ Widget profileCard(BuildContext context, String title) {
   );
 }
 
-Widget logOut() {
+Widget logOut(void Function()? onPressed) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         primary: orangeColor,
       ),

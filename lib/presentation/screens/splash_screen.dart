@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:math' as math;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rare_crew_task_cynthia/presentation/screens/login_screen.dart';
+import 'package:rare_crew_task_cynthia/presentation/screens/main_screen.dart';
 import 'package:rare_crew_task_cynthia/presentation/utils/constants/device_size.dart';
 import '../utils/constants/colors.dart';
 import '../utils/helpers/navigators.dart';
@@ -23,9 +25,20 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
-      navigatePush(context, const LoginScreen());
+    Timer(Duration(seconds: 3), () {
+      if (FirebaseAuth.instance.currentUser == null) {
+        // user not logged ==> Login Screen
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (_) => LoginScreen()), (route) => false);
+      } else {
+        // user already logged in ==> Home Screen
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (_) => MainScreen()), (route) => false);
+      }
     });
+    // Future.delayed(const Duration(seconds: 3), () {
+    //   navigatePush(context, const LoginScreen());
+    // });
   }
 
   @override
@@ -44,11 +57,16 @@ class _SplashScreenState extends State<SplashScreen>
           },
           child: Center(
             child: Hero(
-                tag: 'rare',
-                child: Image.asset('asset/images/rarecrew.png')),
+                tag: 'rare', child: Image.asset('asset/images/rarecrew.png')),
           ),
         ),
       ),
     );
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _animationController.dispose();
+    super.dispose();
   }
 }

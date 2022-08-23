@@ -5,24 +5,29 @@ import 'package:rare_crew_task_cynthia/presentation/utils/constants/device_size.
 import '../constants/colors.dart';
 import 'navigators.dart';
 
-//button for the login and signup screen
-Widget authenticationButton(BuildContext context, String text) {
-  return Container(
-    alignment: Alignment.center,
-    margin: const EdgeInsets.fromLTRB(24, 24, 24, 45),
-    height: context.screenHeight() / 18,
-    width: context.screenHeight() / 2,
-    decoration: BoxDecoration(
-        color: orangeColor, borderRadius: BorderRadius.circular(10)),
-    child: Text(
-      text,
-      style: const TextStyle(
-          color: whiteColor,
-          fontWeight: FontWeight.w600,
-          fontFamily: 'Poppins',
-          fontSize: 18),
-    ),
-  );
+class AuthenticationButton extends StatelessWidget {
+  String text;
+  AuthenticationButton(this.text,{Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      margin: const EdgeInsets.fromLTRB(24, 24, 24, 45),
+      height: context.screenHeight() / 18,
+      width: context.screenHeight() / 2,
+      decoration: BoxDecoration(
+          color: orangeColor, borderRadius: BorderRadius.circular(10)),
+      child: Text(
+        text,
+        style: const TextStyle(
+            color: whiteColor,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'Poppins',
+            fontSize: 18),
+      ),
+    );
+  }
 }
 
 alertDialog(BuildContext context) {

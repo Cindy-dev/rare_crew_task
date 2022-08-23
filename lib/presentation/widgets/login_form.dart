@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:rare_crew_task_cynthia/data/repository/authentication.dart';
+import 'package:rare_crew_task_cynthia/logic/view_model/loginVM.dart';
 import 'package:rare_crew_task_cynthia/logic/view_model_provider.dart';
-import 'package:rare_crew_task_cynthia/presentation/screens/main_screen.dart';
 import 'package:rare_crew_task_cynthia/presentation/screens/signup_screen.dart';
 import 'package:rare_crew_task_cynthia/presentation/utils/helpers/custom_buttons.dart';
 import 'package:rare_crew_task_cynthia/presentation/utils/helpers/navigators.dart';
@@ -30,18 +29,40 @@ class _LoginFormState extends ConsumerState<LoginForm> {
         key: formKey,
         child: Column(
           children: [
-            textForm('Username', const Icon(Icons.person, color: hintTextColor),
-                _emailController),
+            textForm('email', const Icon(Icons.person, color: hintTextColor),
+                _emailController, (String? value) {
+              if (value!.isEmpty) {
+                return 'email is required';
+              }
+              if (!RegExp(
+                      "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
+                  .hasMatch(value)) {
+                return 'Please input a valid email address';
+              } else {
+                return null;
+              }
+            }),
             const SizedBox(
               height: 24,
             ),
             textForm(
-                'Password',
-                const Icon(
-                  Icons.lock,
-                  color: hintTextColor,
-                ),
-                _passwordController),
+              'Password',
+              const Icon(
+                Icons.lock,
+                color: hintTextColor,
+              ),
+              _passwordController,
+              (password) {
+                Pattern pattern =
+                    r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$';
+                RegExp regex = RegExp(pattern.toString());
+                if (!regex.hasMatch(password!)) {
+                  return 'Password should be 6 characters including\nlowercase and uppercase letters and at\nleast a symbol';
+                } else {
+                  return null;
+                }
+              },
+            ),
             const SizedBox(
               height: 24,
             ),
@@ -53,16 +74,27 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                   fontFamily: 'Poppins',
                   fontSize: 14),
             ),
-            GestureDetector(
-                onTap: () {
-                  if (!formKey.currentState!.validate()) {
-                    // Invalid!
-                    return;
-                  }
-                  ref.read(loginViewModelNotifierProvider.notifier).login(
-                      _emailController.text, _passwordController.text, context);
-                },
-                child: authenticationButton(context, 'Login')),
+            Consumer(builder: (context, ref, child) {
+              final result = ref.watch(loginViewModelNotifierProvider);
+              if (result is LoginVMLoading) {
+                return const CircularProgressIndicator(
+                  color: orangeColor,
+                );
+              } else {
+                return GestureDetector(
+                    onTap: () {
+                      if (!formKey.currentState!.validate()) {
+                        // Invalid!
+                        return;
+                      }
+                      ref.read(loginViewModelNotifierProvider.notifier).login(
+                          _emailController.text,
+                          _passwordController.text,
+                          context);
+                    },
+                    child: AuthenticationButton('Login'));
+              }
+            }),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,

@@ -32,17 +32,11 @@ class SignupVMNotifier extends StateNotifier<SignupVMState> {
   Ref ref;
   SignupVMNotifier(this.ref) : super(SignupVMInitial());
 
-  Future<void> signUP(
-      BuildContext context,
-      String email,
-      String password,
-      String phoneNumber,
-      String fullName) async {
+  Future<void> signUP(BuildContext context, String email, String password,
+      String phoneNumber, String fullName) async {
     state = SignupVMLoading();
     try {
-      final result = await ref
-          .read(authServicesProvider)
-          .signUP(() {
+      final result = await ref.read(authServicesProvider).signUP(() {
         navigatePush(context, const LoginScreen());
       }, email, password, phoneNumber, fullName);
       state = SignupVMLoaded(result);
