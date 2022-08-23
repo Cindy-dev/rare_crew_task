@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rare_crew_task_cynthia/data/model/db_model.dart';
 import 'package:rare_crew_task_cynthia/data/repository/database_services.dart';
-import 'package:sqflite/sqflite.dart';
 
 abstract class DBViewModelState {
   DBViewModelState();
@@ -29,9 +28,11 @@ class DBViewModelNotifier extends StateNotifier<DBViewModelState> {
   List<DBModel> _items = [];
 
   var editedItem =
-      DBModel(id: '', name: '', occupation: '', age: num.parse(''));
+      DBModel(id: '', name: '', occupation: '', age: 0);
   final Ref ref;
   DBViewModelNotifier(this.ref) : super(DBViewModelInitial());
+
+  //creating a method to fetch data from our db services
   Future<void> getData() async {
     state = DBViewModelLoading();
     try {

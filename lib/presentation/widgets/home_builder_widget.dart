@@ -11,11 +11,13 @@ import '../utils/constants/colors.dart';
 import '../utils/helpers/grid_tile.dart';
 
 class HomeBuilder extends StatefulHookConsumerWidget {
+  //String id;
   TextEditingController name;
   TextEditingController occupation;
   TextEditingController age;
   HomeBuilder(
       {Key? key,
+      //  required this.id,
       required this.name,
       required this.occupation,
       required this.age})
@@ -25,13 +27,21 @@ class HomeBuilder extends StatefulHookConsumerWidget {
   ConsumerState<HomeBuilder> createState() => _HomeBuilderState();
 }
 
-
 class _HomeBuilderState extends ConsumerState<HomeBuilder> {
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-  }
+  //@override
+  // void didChangeDependencies() {
+  //   var editedData = ref.read(dbViewModelNotifierProvider.notifier).editedItem;
+  //   // TODO: implement didChangeDependencies
+  //   final id = DateTime.now().toString();
+  //   editedData = ref.read(dbViewModelNotifierProvider.notifier).findByID(id);
+  //   setState(() {
+  //     widget.name.text = editedData.name;
+  //     widget.occupation.text = editedData.occupation;
+  //     widget.age.text = editedData.age.toString();
+  //   });
+  //   super.didChangeDependencies();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
