@@ -10,8 +10,8 @@ class MainScreen extends StatefulWidget {
 
   @override
   State<MainScreen> createState() => _MainScreenState();
-}
 
+}
 class _MainScreenState extends State<MainScreen> {
   //remove from screen later
   int _selectedIndex = 0;
@@ -24,7 +24,6 @@ class _MainScreenState extends State<MainScreen> {
       _selectedIndex = index;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,36 +15,43 @@ class ProfileWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(loginViewModelNotifierProvider);
+    Stream<DocumentSnapshot> getData() async* {
+      User user = await FirebaseAuth.instance.currentUser!;
+      yield* FirebaseFirestore.instance
+          .collection('User')
+          .doc(user.uid)
+          .snapshots();
+    }
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        // StreamBuilder<DocumentSnapshot>(
+        //     stream: getData(),
+        //     builder: (context, snapshot) {
+        //       return Center(child: Builder(builder: (BuildContext context) {
+        //         return Column(
+        //           mainAxisAlignment: MainAxisAlignment.center,
+        //           children: [
+        //             Icon(
+        //               Icons.person,
+        //               color: orangeColor,
+        //               size: context.screenHeight() / 4,
+        //             ),
+        //               profileCard(context,snapshot.data?['email']),
+        //             //   profileCard(context, viewModel.appUser.email),
+        //             // profileCard(
+        //             //     context, viewModel.appUser.phoneNumber),
+        //           ],
+        //         );
+        //       }));
+        //     }),
         Center(
-          child: Builder(builder: (BuildContext context) {
-            if (viewModel is LoginVMInitial) {
-            } else if (viewModel is LoginVMLoading) {
-              return const CircularProgressIndicator();
-            } else if (viewModel is LoginVMLoaded) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.person,
-                    color: orangeColor,
-                    size: context.screenHeight() / 4,
-                  ),
-                  profileCard(context, viewModel.appUser.fullName.toString()),
-                  profileCard(context, viewModel.appUser.email),
-                  // profileCard(
-                  //     context, viewModel.appUser.phoneNumber),
-                ],
-              );
-            }
-            return const Text('An error Occurred');
+          child: logOut(() {
+            ref.read(loginViewModelNotifierProvider.notifier).logOut(context);
           }),
         ),
-        logOut(() {
-          ref.read(loginViewModelNotifierProvider.notifier).logOut(context);
-        }),
       ],
     );
   }

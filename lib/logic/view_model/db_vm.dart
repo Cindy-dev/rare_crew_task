@@ -27,8 +27,7 @@ class DBViewModelError extends DBViewModelState {
 class DBViewModelNotifier extends StateNotifier<DBViewModelState> {
   List<DBModel> _items = [];
 
-  var editedItem =
-      DBModel(id: '', name: '', occupation: '', age: 0);
+  var editedItem = DBModel(id: '', name: '', occupation: '', age: 0);
   final Ref ref;
   DBViewModelNotifier(this.ref) : super(DBViewModelInitial());
 
@@ -68,13 +67,9 @@ class DBViewModelNotifier extends StateNotifier<DBViewModelState> {
     });
   }
 
-  Future<void> updateData(String id, DBModel dbModel) async {
-    final newData = DBModel(
-        id: DateTime.now().toString(),
-        name: dbModel.name,
-        occupation: dbModel.occupation,
-        age: dbModel.age);
-    ref.read(dbServicesProvider).updateDB(dbModel);
+  Future<void> updateData(
+      String id, String name, String occupation, num age) async {
+    await ref.read(dbServicesProvider).updateItem(id, name, occupation, age);
   }
 
   Future<void> deleteData(String id) async {

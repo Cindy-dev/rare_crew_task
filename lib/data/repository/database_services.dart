@@ -39,6 +39,21 @@ class DatabaseServices {
     return db.query(table);
   }
 
+  // Update an item by id
+  Future<int> updateItem(String id, String name, String occupation, num age) async {
+    final db = await DatabaseServices.database();
+
+    final data = {
+      'name': name,
+      'occupation': occupation,
+      'age': age,
+    };
+
+    final result = await db
+        .update("rare_crew", data, where: "id = ?", whereArgs: [id]);
+    return result;
+  }
+
   //creating a function that updates item in the database
   Future<int> updateDB(DBModel dbModel) async {
     final db = await DatabaseServices.database();

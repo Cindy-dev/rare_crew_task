@@ -16,7 +16,7 @@ editItemModalSheet(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20))),
       context: context,
-      builder: (context) {
+      builder: (_) {
         return Container(
           padding: const EdgeInsets.all(10),
           margin: const EdgeInsets.only(top: 20),
