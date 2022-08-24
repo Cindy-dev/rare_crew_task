@@ -9,52 +9,58 @@ addItemModalSheet(
     TextEditingController nameController,
     TextEditingController occupationController,
     TextEditingController ageController,
-    void Function()? onPressed
-    ) {
+    void Function()? onPressed) {
   return showModalBottomSheet(
+      isScrollControlled: true,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20))),
       context: context,
       builder: (context) {
-        return Container(
-          padding: const EdgeInsets.all(10),
-          margin: const EdgeInsets.only(top: 20),
-          child: Column(
-            children: [
-              const Text(
-                'Add New Item',
-                style: TextStyle(
-                    color: boldTextColor,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'Poppins',
-                    fontSize: 20),
-              ),
-              const SizedBox(height: 15),
-              addTextForm('Name', nameController),
-              const SizedBox(height: 5),
-              addTextForm('Occupation', occupationController),
-              const SizedBox(height: 5),
-              addTextForm('Age', ageController),
-              const SizedBox(height: 15),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: onPressed,
-                  style: ElevatedButton.styleFrom(
-                    primary: orangeColor,
-                  ),
-                  child: const Text(
-                    'Add',
+        return SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Container(
+              margin: const EdgeInsets.only(top: 20, bottom: 20),
+              child: Column(
+                children: [
+                  const Text(
+                    'Add New Item',
                     style: TextStyle(
-                        color: whiteColor,
+                        color: boldTextColor,
                         fontWeight: FontWeight.w600,
                         fontFamily: 'Poppins',
-                        fontSize: 16),
+                        fontSize: 20),
                   ),
-                ),
-              )
-            ],
+                  const SizedBox(height: 15),
+                  addTextForm('Name', nameController),
+                  const SizedBox(height: 5),
+                  addTextForm('Occupation', occupationController),
+                  const SizedBox(height: 5),
+                  addTextForm('Age', ageController),
+                  const SizedBox(height: 15),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: onPressed,
+                      style: ElevatedButton.styleFrom(
+                        primary: orangeColor,
+                      ),
+                      child: const Text(
+                        'Add',
+                        style: TextStyle(
+                            color: whiteColor,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Poppins',
+                            fontSize: 16),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                ],
+              ),
+            ),
           ),
         );
       });

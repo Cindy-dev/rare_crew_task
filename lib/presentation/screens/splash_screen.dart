@@ -58,6 +58,7 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
   }
+  //disposing the controller to avoid leaks
   @override
   void dispose() {
     // TODO: implement dispose

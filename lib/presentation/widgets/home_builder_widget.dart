@@ -5,22 +5,17 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rare_crew_task_cynthia/presentation/utils/constants/device_size.dart';
 import 'package:rare_crew_task_cynthia/presentation/utils/helpers/navigators.dart';
 import 'package:rare_crew_task_cynthia/presentation/widgets/edit_item_modal_sheet.dart';
-
-import '../../data/model/db_model.dart';
-import '../../data/repository/database_services.dart';
 import '../../logic/view_model/db_vm.dart';
 import '../../logic/view_model_provider.dart';
 import '../utils/constants/colors.dart';
 import '../utils/helpers/grid_tile.dart';
 
 class HomeBuilder extends StatefulHookConsumerWidget {
-  //String id;
-  TextEditingController name;
-  TextEditingController occupation;
-  TextEditingController age;
-  HomeBuilder(
+  final TextEditingController name;
+  final TextEditingController occupation;
+  final TextEditingController age;
+  const HomeBuilder(
       {Key? key,
-      //  required this.id,
       required this.name,
       required this.occupation,
       required this.age})
@@ -83,12 +78,7 @@ class _HomeBuilderState extends ConsumerState<HomeBuilder> {
                       });
                     },
                         //the edit modal sheet
-                        update: () => _showForm(viewModel.dbModel[i].id
-                            // editItemModalSheet(context, widget.name, widget.occupation,
-                            //     widget.age, () {
-                            //
-                            //     });
-                            )));
+                        update: () => _showForm(viewModel.dbModel[i].id)));
               }),
         );
       }
