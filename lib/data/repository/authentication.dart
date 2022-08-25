@@ -22,7 +22,8 @@ class AuthenticationServices {
             phoneNumber: phoneNumber);
         final authUser = newUser.user;
         await authUser?.updateDisplayName(fullName);
-        fireStore.collection('User').add({
+        //adding data signed up user data to firestore
+        fireStore.collection('User').doc(newUser.user!.uid).set({
           'id': newUser.user?.uid,
           'phoneNumber': phoneNumber,
           'email': email,

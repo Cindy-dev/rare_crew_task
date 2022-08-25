@@ -20,45 +20,60 @@ class ProfileWidget extends StatefulHookConsumerWidget {
 class _ProfileWidgetState extends ConsumerState<ProfileWidget> {
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
     final viewModel = ref.watch(profileViewModelNotifierProvider);
-    final collectionRef = FirebaseFirestore.instance.collection('User');
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.person,
-              color: orangeColor,
-              size: context.screenHeight() / 4,
-            ),
-
-            Container(
-              height: 500,
-              child: FutureBuilder<DocumentSnapshot>(
-                future: collectionRef.doc(user?.uid).get(),
-                builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                  Map<String, dynamic>? futureData =
-                      snapshot.data?.data() as Map<String, dynamic>;
-                  print('work${user?.uid}');
-                  print('helllo' + collectionRef.doc(user?.uid).toString());
-                  // if (snapshot.connectionState == ConnectionState.done) {
-                  //   return profileCard(
-                  //       context, futureData['phoneNumber'] ?? '');
-                  // }
-                  return const CircularProgressIndicator();
-                },
+        Icon(
+          Icons.person,
+          color: orangeColor,
+          size: context.screenHeight() / 4,
+        ),
+        FutureBuilder<DocumentSnapshot>(
+          future:
+              ref.read(profileViewModelNotifierProvider.notifier).getUserDoc(),
+          builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            //returns a list of user details retrieved from firestore
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    profileCard(context, 'Email: ${snapshot.data!['email']}'),
+                    profileCard(
+                        context, 'Full Name: ${snapshot.data!['fullName']}'),
+                    profileCard(context,
+                        'Phone Number: ${snapshot.data!['phoneNumber']}')
+                  ]);
+            }
+            if (!snapshot.hasData) {
+              return const CircularProgressIndicator(
+                color: orangeColor,
+              );
+            }
+            if (snapshot.hasError) {
+              return const Text(
+                'An error Occurred',
+                style: TextStyle(
+                    color: whiteColor,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Poppins',
+                    fontSize: 16),
+              );
+            }
+            return const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Loading.......',
+                style: TextStyle(
+                    color: whiteColor,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Poppins',
+                    fontSize: 16),
               ),
-            ),
-
-            //profileCard(context, viewModel.userData['email'] ?? '' ),
-            // profileCard(context, viewModel.appUser.email),
-            //  profileCard(context, viewModel.appUser.phoneNumber),
-          ],
+            );
+          },
         ),
         Center(
           child: logOut(() {
