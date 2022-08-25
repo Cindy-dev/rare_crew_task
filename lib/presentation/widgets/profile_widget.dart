@@ -18,39 +18,16 @@ class ProfileWidget extends StatefulHookConsumerWidget {
 }
 
 class _ProfileWidgetState extends ConsumerState<ProfileWidget> {
-
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
     final viewModel = ref.watch(profileViewModelNotifierProvider);
+    final collectionRef = FirebaseFirestore.instance.collection('User');
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        FutureBuilder(
-            future: FirebaseFirestore.instance
-                .collection('User').doc(user?.uid).
-                get(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final data = FirebaseFirestore.instance
-                    .collection('User')
-                    .get();
-                print(data.toString());
-                //return
-               // profileCard(context, snapshot.data!.docs!['name'].toString());
-                  //UserMessage(snapshot.data!.docs);
-              }
-              return const CircularProgressIndicator();
-            },
-          ),
-
-        // StreamBuilder<DocumentSnapshot>(
-        //     stream: getData(),
-        //     builder: (context, snapshot) {
-        //       return Center(child: Builder(builder: (BuildContext context) {
-        //         return
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -60,13 +37,29 @@ class _ProfileWidgetState extends ConsumerState<ProfileWidget> {
               size: context.screenHeight() / 4,
             ),
 
+            Container(
+              height: 500,
+              child: FutureBuilder<DocumentSnapshot>(
+                future: collectionRef.doc(user?.uid).get(),
+                builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  Map<String, dynamic>? futureData =
+                      snapshot.data?.data() as Map<String, dynamic>;
+                  print('work${user?.uid}');
+                  print('helllo' + collectionRef.doc(user?.uid).toString());
+                  // if (snapshot.connectionState == ConnectionState.done) {
+                  //   return profileCard(
+                  //       context, futureData['phoneNumber'] ?? '');
+                  // }
+                  return const CircularProgressIndicator();
+                },
+              ),
+            ),
+
             //profileCard(context, viewModel.userData['email'] ?? '' ),
             // profileCard(context, viewModel.appUser.email),
             //  profileCard(context, viewModel.appUser.phoneNumber),
           ],
         ),
-        //       }));
-        //     }),
         Center(
           child: logOut(() {
             ref.read(loginViewModelNotifierProvider.notifier).logOut(context);
