@@ -23,109 +23,116 @@ class _LoginFormState extends ConsumerState<LoginForm> {
   @override
   Widget build(BuildContext context) {
     final viewModel = ref.watch(loginViewModelNotifierProvider);
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 44, 24, 24),
-      child: Form(
-        key: formKey,
-        child: Column(
-          children: [
-            textForm('email', const Icon(Icons.person, color: hintTextColor),
-                _emailController, (String? value) {
-              if (value!.isEmpty) {
-                return 'email is required';
-              }
-              if (!RegExp(
-                      "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
-                  .hasMatch(value)) {
-                return 'Please input a valid email address';
-              } else {
-                return null;
-              }
-            }),
-            const SizedBox(
-              height: 24,
-            ),
-            textForm(
-              'Password',
-              const Icon(
-                Icons.lock,
-                color: hintTextColor,
-              ),
-              _passwordController,
-              (password) {
-                Pattern pattern =
-                    r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$';
-                RegExp regex = RegExp(pattern.toString());
-                if (!regex.hasMatch(password!)) {
-                  return 'Password should be 6 characters including\nlowercase and uppercase letters and at\nleast a symbol';
-                } else {
-                  return null;
-                }
-              },
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            const Text(
-              'Forgot Password?',
-              style: TextStyle(
-                  color: boldTextColor,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'Poppins',
-                  fontSize: 14),
-            ),
-            Consumer(builder: (context, ref, child) {
-              final result = ref.watch(loginViewModelNotifierProvider);
-              if (result is LoginVMLoading) {
-                return const CircularProgressIndicator(
-                  color: orangeColor,
-                );
-              } else {
-                return GestureDetector(
-                    onTap: () {
-                      if (!formKey.currentState!.validate()) {
-                        // Invalid!
-                        return;
-                      }
-                      ref.read(loginViewModelNotifierProvider.notifier).login(
-                          _emailController.text,
-                          _passwordController.text,
-                          context);
-                    },
-                    child: AuthenticationButton('Login'));
-              }
-            }),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
+    return Expanded(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(24, 44, 24, 24),
+          child: Form(
+            key: formKey,
+            child: Column(
               children: [
+                textForm(
+                    'email',
+                    const Icon(Icons.person, color: hintTextColor),
+                    _emailController, (String? value) {
+                  if (value!.isEmpty) {
+                    return 'email is required';
+                  }
+                  if (!RegExp(
+                          "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
+                      .hasMatch(value)) {
+                    return 'Please input a valid email address';
+                  } else {
+                    return null;
+                  }
+                }),
+                const SizedBox(
+                  height: 24,
+                ),
+                textForm(
+                  'Password',
+                  const Icon(
+                    Icons.lock,
+                    color: hintTextColor,
+                  ),
+                  _passwordController,
+                  (password) {
+                    Pattern pattern =
+                        r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$';
+                    RegExp regex = RegExp(pattern.toString());
+                    if (!regex.hasMatch(password!)) {
+                      return 'Password should be 6 characters including\nlowercase and uppercase letters and at\nleast a symbol';
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
                 const Text(
-                  'Don’t have an account?',
+                  'Forgot Password?',
                   style: TextStyle(
                       color: boldTextColor,
                       fontWeight: FontWeight.w500,
                       fontFamily: 'Poppins',
                       fontSize: 14),
                 ),
-                const SizedBox(
-                  width: 5,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    navigatePush(context, const SignupScreen());
-                  },
-                  child: const Text(
-                    'Sign Up',
-                    style: TextStyle(
-                        color: orangeColor,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Poppins',
-                        fontSize: 14),
-                  ),
+                Consumer(builder: (context, ref, child) {
+                  final result = ref.watch(loginViewModelNotifierProvider);
+                  if (result is LoginVMLoading) {
+                    return const CircularProgressIndicator(
+                      color: orangeColor,
+                    );
+                  } else {
+                    return GestureDetector(
+                        onTap: () {
+                          if (!formKey.currentState!.validate()) {
+                            // Invalid!
+                            return;
+                          }
+                          ref
+                              .read(loginViewModelNotifierProvider.notifier)
+                              .login(_emailController.text,
+                                  _passwordController.text, context);
+                        },
+                        child: AuthenticationButton('Login'));
+                  }
+                }),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      'Don’t have an account?',
+                      style: TextStyle(
+                          color: boldTextColor,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Poppins',
+                          fontSize: 14),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        navigatePush(context, const SignupScreen());
+                      },
+                      child: const Text(
+                        'Sign Up',
+                        style: TextStyle(
+                            color: orangeColor,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Poppins',
+                            fontSize: 14),
+                      ),
+                    )
+                  ],
                 )
               ],
-            )
-          ],
+            ),
+          ),
         ),
       ),
     );

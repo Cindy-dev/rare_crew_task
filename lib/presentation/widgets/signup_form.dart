@@ -27,7 +27,6 @@ class _SignupFormState extends ConsumerState<SignupForm> {
   Widget build(BuildContext context) {
     return Expanded(
       child: SingleChildScrollView(
-        primary: true,
         scrollDirection: Axis.vertical,
         child: Padding(
           padding: EdgeInsets.fromLTRB(24, context.screenHeight() / 26, 24, 24),

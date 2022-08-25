@@ -7,7 +7,7 @@ import 'navigators.dart';
 
 class AuthenticationButton extends StatelessWidget {
   String text;
-  AuthenticationButton(this.text,{Key? key}) : super(key: key);
+  AuthenticationButton(this.text, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +28,46 @@ class AuthenticationButton extends StatelessWidget {
       ),
     );
   }
+}
+
+showAuthDialog(BuildContext context, String message) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text(
+            'An Error Occurred',
+            style: TextStyle(
+                color: boldTextColor,
+                fontWeight: FontWeight.w600,
+                fontFamily: 'Poppins',
+                fontSize: 18),
+          ),
+          content: Text(
+            message,
+            style: const TextStyle(
+                color: textColor,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'Poppins',
+                fontSize: 18),
+          ),
+          actions: [
+            ElevatedButton(
+                onPressed: () => navigatePop(context),
+                style: ElevatedButton.styleFrom(
+                  primary: orangeColor,
+                ),
+                child: const Text(
+                  'Okay',
+                  style: TextStyle(
+                      color: whiteColor,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Poppins',
+                      fontSize: 16),
+                ))
+          ],
+        );
+      });
 }
 
 alertDialog(BuildContext context) {

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rare_crew_task_cynthia/data/repository/authentication.dart';
+import 'package:rare_crew_task_cynthia/presentation/utils/helpers/custom_buttons.dart';
 
 import '../../data/model/user.dart';
 import '../../presentation/screens/login_screen.dart';
@@ -43,6 +44,8 @@ class LoginVMNotifier extends StateNotifier<LoginVMState> {
       }, email, password);
       state = LoginVMLoaded(result);
     } catch (error) {
+      showAuthDialog(context, error.toString());
+      state = LoginVMError(error.toString());
       print(error);
     }
   }

@@ -4,6 +4,7 @@ import 'package:rare_crew_task_cynthia/data/repository/authentication.dart';
 
 import '../../data/model/user.dart';
 import '../../presentation/screens/login_screen.dart';
+import '../../presentation/utils/helpers/custom_buttons.dart';
 import '../../presentation/utils/helpers/navigators.dart';
 
 abstract class SignupVMState {
@@ -41,6 +42,7 @@ class SignupVMNotifier extends StateNotifier<SignupVMState> {
       }, email, password, phoneNumber, fullName);
       state = SignupVMLoaded(result);
     } catch (error) {
+      showAuthDialog(context, error.toString());
       state = SignupVMError(error.toString());
       print(error);
     }

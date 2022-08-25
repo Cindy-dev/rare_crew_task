@@ -11,7 +11,7 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: Container(
         padding: EdgeInsets.only(top: context.screenHeight() / 15),
         height: context.screenHeight(),
