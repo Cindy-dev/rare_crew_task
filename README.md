@@ -6,13 +6,13 @@ A new Flutter project.
 
 This project is a flutter application using firebase for user authentication and sqflite for local storage.
 <p align="center">
-  <img src="assets\screenshots\onboarding.png" width="350" title="Onboarding Screen">
-  <img src="assets\screenshots\login.png" width="350" title="Login Screen">
-  <img src="assets\screenshots\signup.png" width="350" title="Signup Screen">
-  <img src="assets\screenshots\home.png" width="350" title="Home Screen">
-  <img src="assets\screenshots\profile.png" width="350" title="Profile Screen">
-  <img src="assets\screenshots\add.png" width="350" title="Add New Data Screen">
-  <img src="assets\screenshots\edit.png" width="350" title="Edit Existing Data Screen">
+  <img src="asset\screenshots\onboarding.png" width="350" title="Onboarding Screen">
+  <img src="asset\screenshots\login.png" width="350" title="Login Screen">
+  <img src="asset\screenshots\signup.png" width="350" title="Signup Screen">
+  <img src="asset\screenshots\home.png" width="350" title="Home Screen">
+  <img src="asset\screenshots\profile.png" width="350" title="Profile Screen">
+  <img src="asset\screenshots\add.png" width="350" title="Add New Data Screen">
+  <img src="asset\screenshots\edit.png" width="350" title="Edit Existing Data Screen">
 </p>
 
 A few resources to get you started if this is your first Flutter project:
