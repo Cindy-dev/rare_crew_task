@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:rare_crew_task_cynthia/logic/controllers/request_view_model.dart';
 import 'package:rare_crew_task_cynthia/logic/view_model/loginVM.dart';
 import 'package:rare_crew_task_cynthia/logic/view_model_provider.dart';
 import 'package:rare_crew_task_cynthia/presentation/screens/signup_screen.dart';
@@ -81,7 +82,9 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                 ),
                 Consumer(builder: (context, ref, child) {
                   final result = ref.watch(loginViewModelNotifierProvider);
-                  if (result is LoginVMLoading) {
+                  ref.listen<RequestState>(
+                      loginViewModelNotifierProvider, (previous, state) {});
+                  if (result is Loading) {
                     return const CircularProgressIndicator(
                       color: orangeColor,
                     );
@@ -94,8 +97,11 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                           }
                           ref
                               .read(loginViewModelNotifierProvider.notifier)
-                              .login(_emailController.text,
-                                  _passwordController.text, context);
+                              .signIn(
+                                () {},
+                                _emailController.text,
+                                _passwordController.text,
+                              );
                         },
                         child: AuthenticationButton('Login'));
                   }

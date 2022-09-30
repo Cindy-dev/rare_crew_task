@@ -9,54 +9,70 @@ import '../../data/model/user.dart';
 import '../../presentation/screens/login_screen.dart';
 import '../../presentation/screens/main_screen.dart';
 import '../../presentation/utils/helpers/navigators.dart';
+import '../controllers/request_view_model.dart';
+import '../manager/auth_manager.dart';
 
-abstract class LoginVMState {
-  LoginVMState();
+class LoginVMNotifier extends RequestStateNotifier<AppUser> {
+  final AuthDataManager authDataManager;
+
+  LoginVMNotifier({
+    required this.authDataManager,
+  });
+
+  void signIn(VoidCallback onSuccess, String email, String password) =>
+      makeRequest(() => authDataManager.signIn(() { }, email, password));
+
+
 }
 
-class LoginVMInitial extends LoginVMState {
-  LoginVMInitial();
-}
-
-class LoginVMLoading extends LoginVMState {
-  LoginVMLoading();
-}
-
-class LoginVMLoaded extends LoginVMState {
-  AppUser appUser;
-  LoginVMLoaded(this.appUser);
-}
-
-class LoginVMError extends LoginVMState {
-  String error;
-  LoginVMError(this.error);
-}
-
-class LoginVMNotifier extends StateNotifier<LoginVMState> {
-  Ref ref;
-  LoginVMNotifier(this.ref) : super(LoginVMInitial());
-  Future<void> login(
-      String email, String password, BuildContext context) async {
-    state = LoginVMLoading();
-    try {
-      final result = await ref.read(authServicesProvider).signIn(() {
-        navigatePush(context, const MainScreen());
-      }, email, password);
-      state = LoginVMLoaded(result);
-    } catch (error) {
-      showAuthDialog(context, error.toString());
-      state = LoginVMError(error.toString());
-      print(error);
-    }
-  }
-
-  Future<void> logOut(BuildContext context) async {
-    try {
-      await ref.read(authServicesProvider).signOut(() {
-        navigatePush(context, const LoginScreen());
-      });
-    } catch (error) {
-      print(error.toString());
-    }
-  }
-}
+//
+// abstract class LoginVMState {
+//   LoginVMState();
+// }
+//
+// class LoginVMInitial extends LoginVMState {
+//   LoginVMInitial();
+// }
+//
+// class LoginVMLoading extends LoginVMState {
+//   LoginVMLoading();
+// }
+//
+// class LoginVMLoaded extends LoginVMState {
+//   AppUser appUser;
+//   LoginVMLoaded(this.appUser);
+// }
+//
+// class LoginVMError extends LoginVMState {
+//   String error;
+//   LoginVMError(this.error);
+// }
+//
+// class LoginVMNotifier extends StateNotifier<LoginVMState> {
+//   Ref ref;
+//   LoginVMNotifier(this.ref) : super(LoginVMInitial());
+//   Future<void> login(
+//       String email, String password, BuildContext context) async {
+//     state = LoginVMLoading();
+//     try {
+//       final result = await ref.read(authServicesProvider).signIn(() {
+//         navigatePush(context, const MainScreen());
+//       }, email, password);
+//       state = LoginVMLoaded(result);
+//     } catch (error) {
+//       showAuthDialog(context, error.toString());
+//       state = LoginVMError(error.toString());
+//       print(error);
+//     }
+//   }
+//
+//   Future<void> logOut(BuildContext context) async {
+//     try {
+//       await ref.read(authServicesProvider).signOut(() {
+//         navigatePush(context, const LoginScreen());
+//       });
+//     } catch (error) {
+//       print(error.toString());
+//     }
+//   }
+// }

@@ -77,7 +77,7 @@ class _ProfileWidgetState extends ConsumerState<ProfileWidget> {
         ),
         Center(
           child: logOut(() {
-            ref.read(loginViewModelNotifierProvider.notifier).logOut(context);
+            //ref.read(loginViewModelNotifierProvider.notifier).logOut(context);
           }),
         ),
       ],

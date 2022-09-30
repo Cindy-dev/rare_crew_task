@@ -1,18 +1,27 @@
-// import 'package:crypto_app/data/model/chart_model.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import '../../data/repository/crypto_services.dart';
-// import '../implementation/chart_dm_impl.dart';
-//
-// class CryptoChartDataManager extends ChartDataManagerImpl {
-//   final CoinApiService coinApiService;
-//   CryptoChartDataManager({required this.coinApiService});
-//
-//   @override
-//   Future<ChartModel> getCryptoChart(String id) async =>
-//       await coinApiService.getCryptoChart(id);
-// }
-//
-// final cryptoChartDataManagerProvider = Provider((ref) {
-//   final cryptoDataManager = ref.watch(coinApiServiceProvider);
-//   return CryptoChartDataManager(coinApiService: cryptoDataManager);
-// });
+import 'dart:ui';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rare_crew_task_cynthia/data/model/user.dart';
+import 'package:rare_crew_task_cynthia/data/repository/authentication.dart';
+import '../implementation/auth_impl.dart';
+
+class AuthDataManager extends AuthDataManagerImpl {
+  final AuthenticationServices authService;
+  AuthDataManager({required this.authService});
+
+  @override
+  Future<AppUser> signUP(VoidCallback onSuccess, String email, String password, String phoneNumber, String fullName) {
+    // TODO: implement signUP
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<AppUser> signIn(VoidCallback onSuccess, String email, String password) {
+    // TODO: implement signIn
+    throw UnimplementedError();
+  }
+}
+
+final authDataManagerProvider = Provider((ref) {
+  final authDataManager = ref.watch(authServicesProvider);
+  return AuthDataManager(authService: authDataManager);
+});
