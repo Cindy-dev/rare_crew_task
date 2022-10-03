@@ -9,7 +9,7 @@ class AuthenticationServices {
   final fireStore = FirebaseFirestore.instance;
 
   //Method called to create user with email and password
-  Future<AppUser> signUP(VoidCallback onSuccess, String email, String password,
+  Future<AppUser> signUP( String email, String password,
       String phoneNumber, String fullName) async {
     try {
       final newUser = await FirebaseAuth.instance
@@ -29,7 +29,7 @@ class AuthenticationServices {
           'email': email,
           'fullName': fullName,
         });
-        onSuccess.call();
+        // onSuccess.call();
         return user;
       } else {
         throw Exception();
@@ -41,11 +41,12 @@ class AuthenticationServices {
   }
 
   //login method
-  Future<AppUser> signIn(
-      VoidCallback onSuccess, String email, String password) async {
+  Future<UserCredential> signIn(
+      String email, String password) async {
     try {
       final result = await auth.signInWithEmailAndPassword(
           email: email, password: password);
+      print(result);
 
       if (result.user != null) {
         var user = AppUser(
@@ -53,8 +54,10 @@ class AuthenticationServices {
             email: result.user!.email.toString(),
             fullName: result.user!.displayName.toString(),
             phoneNumber: result.user!.phoneNumber.toString());
-        onSuccess.call();
-        return user;
+       // onSuccess.call();
+
+        return result;
+
       } else {
         throw Exception();
       }

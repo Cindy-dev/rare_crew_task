@@ -12,19 +12,24 @@ import '../../presentation/utils/helpers/navigators.dart';
 import '../controllers/request_view_model.dart';
 import '../manager/auth_manager.dart';
 
-class LoginVMNotifier extends RequestStateNotifier<AppUser> {
-  final AuthDataManager authDataManager;
+class LoginVMNotifier extends RequestStateNotifier<UserCredential> {
 
-  LoginVMNotifier({
-    required this.authDataManager,
-  });
+   final AuthDataManager _authDataManager;
 
-  void signIn(VoidCallback onSuccess, String email, String password) =>
-      makeRequest(() => authDataManager.signIn(() { }, email, password));
+  LoginVMNotifier(
+    Ref ref
+  ) : _authDataManager = ref.read(authDataManagerProvider);
+
+  void signIn(String email, String password) =>
+      makeRequest(() => _authDataManager.signIn(email, password));
 
 
 }
 
+
+final loginViewModelNotifierProvider =
+StateNotifierProvider<LoginVMNotifier, RequestState<UserCredential>>(
+        (ref) => LoginVMNotifier(ref));
 //
 // abstract class LoginVMState {
 //   LoginVMState();

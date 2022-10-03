@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rare_crew_task_cynthia/data/model/user.dart';
 import 'package:rare_crew_task_cynthia/logic/controllers/request_view_model.dart';
@@ -11,12 +12,9 @@ final dbViewModelNotifierProvider =
     StateNotifierProvider.autoDispose<DBViewModelNotifier, DBViewModelState>(
         (ref) => DBViewModelNotifier(ref));
 
-final loginViewModelNotifierProvider =
-    StateNotifierProvider<LoginVMNotifier, RequestState<AppUser>>(
-        (ref) => LoginVMNotifier(authDataManager: ref.watch(authDataManagerProvider)));
 
 final signupViewModelNotifierProvider =
-    StateNotifierProvider<SignupVMNotifier, SignupVMState>(
+    StateNotifierProvider<SignupVMNotifier, RequestState<AppUser>>(
         (ref) => SignupVMNotifier(ref));
 
 final profileViewModelNotifierProvider =

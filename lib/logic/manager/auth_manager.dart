@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rare_crew_task_cynthia/data/model/user.dart';
 import 'package:rare_crew_task_cynthia/data/repository/authentication.dart';
@@ -9,16 +10,13 @@ class AuthDataManager extends AuthDataManagerImpl {
   AuthDataManager({required this.authService});
 
   @override
-  Future<AppUser> signUP(VoidCallback onSuccess, String email, String password, String phoneNumber, String fullName) {
-    // TODO: implement signUP
-    throw UnimplementedError();
-  }
+  Future<AppUser> signUP(String email, String password, String phoneNumber,
+          String fullName) async =>
+      await authService.signUP(email, password, phoneNumber, fullName);
 
   @override
-  Future<AppUser> signIn(VoidCallback onSuccess, String email, String password) {
-    // TODO: implement signIn
-    throw UnimplementedError();
-  }
+  Future<UserCredential> signIn(String email, String password) async =>
+      await authService.signIn(email, password);
 }
 
 final authDataManagerProvider = Provider((ref) {
