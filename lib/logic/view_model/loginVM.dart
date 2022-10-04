@@ -1,14 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rare_crew_task_cynthia/data/repository/authentication.dart';
-import 'package:rare_crew_task_cynthia/presentation/utils/helpers/custom_buttons.dart';
-
-import '../../data/model/user.dart';
-import '../../presentation/screens/login_screen.dart';
-import '../../presentation/screens/main_screen.dart';
-import '../../presentation/utils/helpers/navigators.dart';
 import '../controllers/request_view_model.dart';
 import '../manager/auth_manager.dart';
 

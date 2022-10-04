@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rare_crew_task_cynthia/data/model/user.dart';
@@ -18,7 +17,6 @@ class AuthDataManager extends AuthDataManagerImpl {
   Future<UserCredential> signIn(String email, String password) async =>
       await authService.signIn(email, password);
 }
-
 final authDataManagerProvider = Provider((ref) {
   final authDataManager = ref.watch(authServicesProvider);
   return AuthDataManager(authService: authDataManager);
